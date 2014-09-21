@@ -1,9 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "tads/lista.c"
 
 typedef struct{
 	char *nome;
-	//Lista listaCompras;
+	Lista listaCompras;
 	char *revista;
 }Cliente;
 
