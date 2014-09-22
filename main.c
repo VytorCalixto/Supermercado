@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tads/lista.c"
-#include "tads/fila.c"
 #include "tads/pilha.c"
 #include "logger/logger.c"
 
@@ -10,6 +9,10 @@ typedef struct{
 	Lista listaCompras;
 	char *revista;
 }Cliente;
+
+#define TIPO Cliente
+#include "tads/fila.h"
+#undef TIPO
 
 void adicionarCliente(Fila *fila);
 
@@ -21,7 +24,7 @@ void main(){
 	int opcao;
 
 	Fila filaClientes;
-	//iniciarFila(&filaClientes);
+	iniciaFila(&filaClientes);
 	Pilha pilhaRevistas;
 	//iniciarPilha(&pilhaRevistas);
 
@@ -32,6 +35,7 @@ void main(){
 
 		if(opcao == 1){
 			adicionarCliente(&filaClientes);
+			opcao = 0;
 		}else if(opcao == 2){
 
 		}else if(opcao == 3){
@@ -49,7 +53,11 @@ void main(){
 void adicionarCliente(Fila *fila){
 	char *nome;
 	puts("Qual o nome do cliente?");
+	//FIXME: Nome do cliente ñ tah salvando, print retorna null (Segmentation Fault)
 	scanf("%s", nome);
-	Cliente cliente = {nome};
-	//enfileira(fila, cliente);
+	printf("%s",nome);
+	/*Cliente cliente;
+	cliente.nome=nome;
+
+	enfileira(cliente, fila);*/
 }
