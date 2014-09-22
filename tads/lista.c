@@ -1,11 +1,11 @@
 // Lista duplamente encadeada
-typedef struct{
-	char elemento[]; //Para escrever strings
-	ElementoLista *proximo;
-	ElementoLista *anterior;
+typedef struct ElementoLista{
+	char *elemento; //Para escrever strings
+	struct ElementoLista *proximo;
+	struct ElementoLista *anterior;
 }ElementoLista;
 
-typedef ElementoLista* Lista;
+typedef ElementoLista Lista;
 
 void iniciaLista(Lista *lista){
 	lista = (Lista *) malloc(sizeof(Lista));
@@ -18,7 +18,7 @@ int vaziaLista(Lista *lista){
 }
 
 // FIXME: Copiei o que estava no caderno, precisa de revisão
-void insereLista(Lista *lista, char[] elemento){
+void insereLista(Lista *lista, char *elemento){
 	lista->anterior->proximo = (Lista *) malloc(sizeof(Lista));
 	lista->anterior->proximo->proximo = lista;
 	lista->anterior->proximo->anterior = lista->anterior;
@@ -35,8 +35,8 @@ char* removeLista(Lista *lista, ElementoLista *posicao){
 		return "";
 	}else{
 		posicao->anterior->proximo = posicao->proximo;
-		posicao->prox->anterior = posicao->anterior;
-		char elemento[] = posicao->elemento;
+		posicao->proximo->anterior = posicao->anterior;
+		char *elemento = posicao->elemento;
 		free(posicao);
 		return elemento;
 	}
@@ -46,7 +46,7 @@ void imprimeLista(Lista *lista){
 	if(vaziaLista(lista)){
 		puts("Erro: impossível imprimir lista.\nMotivo: a lista está vazia.");
 	}else{
-		ElementoLista aux = lista->proximo;
+		ElementoLista *aux = lista->proximo;
 		int valor = 1;
 		while(aux != lista){
 			printf("%d - %s", valor, aux->elemento);
