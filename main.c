@@ -10,17 +10,19 @@ typedef struct{
 	char *revista;
 }Cliente;
 
+Logger logger; //logger precisa ser global
+
 #define TIPO Cliente
 #include "tads/fila.h"
 #undef TIPO
 
 void adicionarCliente(Fila *fila);
 
+
 void main(){
-	Logger logger;
 	startLogger(&logger, "log.txt");
 
-	puts("Bem vindo ao Supermercado Algorítmico!\n");
+	puts("Bem vindo ao Supermercado Algoritmico!\n");
 	int opcao;
 
 	Fila filaClientes;
@@ -52,11 +54,16 @@ void main(){
 void adicionarCliente(Fila *fila){
 	char *nome;
 	puts("Qual o nome do cliente?");
-	//FIXME: Nome do cliente ñ tah salvando, print retorna null (Segmentation Fault)
 	scanf("%s", &nome);
-	printf("%s\n",&nome);
 	Cliente cliente;
 	cliente.nome = nome;
 
 	enfileira(cliente, fila);
+
+	char *a = "Foi adicionado na fila o cliente: ";
+	char *msg = (char *) malloc( 1 + strlen(a) + strlen(&cliente.nome));
+	strcpy(msg, a);
+	strcat(msg, &cliente.nome);
+	logFile(&logger, msg);
+	free(msg);
 }

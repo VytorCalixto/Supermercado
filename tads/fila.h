@@ -1,4 +1,4 @@
-#ifndef TIPO 
+#ifndef TIPO
 #error Você deve definir o TIPO antes de incluir este arquivo!
 #endif
 
@@ -28,7 +28,7 @@ void enfileira(TIPO elemento, Fila *fila){
 	fila->final->elemento = elemento;
 }
 
-TIPO desinfileira(Fila *fila){
+TIPO desenfileira(Fila *fila){
 	ElementoFila *aux;
 	if(vaziaFila(*fila)){
 		puts("Erro: não é possível desenfileirar.\nMotivo: a fila está vazia.");
