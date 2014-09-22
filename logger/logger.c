@@ -1,11 +1,13 @@
 typedef struct{
-    FILE *file;
+    FILE *file; //Arquivo do log
 }Logger;
 
+//Salva uma mensagem de texto no arquivo
 void logFile(Logger *logger, char *logMessage){
   fprintf(logger->file, "%s\n", logMessage);
 }
 
+//Inicia o logger abrindo o arquivo e colocando as informações iniciais.
 void startLogger(Logger *logger, char *path){
   logger->file = fopen(path, "w");
   logFile(logger, "=================================================");
@@ -14,6 +16,7 @@ void startLogger(Logger *logger, char *path){
   logFile(logger, "=================================================");
 }
 
+//Termina o logger desalocando da memória
 void endLogger(Logger *logger){
   logFile(logger, "=================================================");
   logFile(logger, "Fim da execucao");

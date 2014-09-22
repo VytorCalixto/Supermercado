@@ -28,10 +28,10 @@ void insereLista(Lista *lista, char *elemento){
 
 char* removeLista(Lista *lista, ElementoLista *posicao){
 	if(vaziaLista(lista)){
-		puts("Erro: não é possível remover.\nMotivo: a lista está vazia.");
+		puts("ERRO: não é possível remover.\nMotivo: a lista está vazia.");
 		return "";
 	}else if(posicao == lista){
-		puts("Erro: não é possível remover.\nMotivo: parâmetro posição aponta para nodo cabeça.");
+		puts("ERRO: não é possível remover.\nMotivo: parâmetro posição aponta para nodo cabeça.");
 		return "";
 	}else{
 		posicao->anterior->proximo = posicao->proximo;
@@ -44,7 +44,7 @@ char* removeLista(Lista *lista, ElementoLista *posicao){
 
 void imprimeLista(Lista *lista){
 	if(vaziaLista(lista)){
-		puts("Erro: impossível imprimir lista.\nMotivo: a lista está vazia.");
+		puts("ERRO: impossível imprimir lista.\nMotivo: a lista está vazia.");
 	}else{
 		ElementoLista *aux = lista->proximo;
 		int valor = 1;
