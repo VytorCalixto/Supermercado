@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tads/lista.c"
+#include "tads/lista.h"
 #include "tads/pilha.c"
 #include "logger/logger.c"
 
@@ -29,13 +29,12 @@ void main(){
 	//iniciarPilha(&pilhaRevistas);
 
 	do{
-		puts("O que você gostaria de fazer:\n");
-		puts("1. Adicionar Cliente a fila\n2. Criar nova Lista de Compras\n3. Ir para a fila\n0. Sair\n");
+		puts("O que você gostaria de fazer:");
+		puts("1. Adicionar Cliente a fila\n2. Criar nova Lista de Compras\n3. Ir para a fila\n0. Sair");
 		scanf("%d",&opcao);
 
 		if(opcao == 1){
 			adicionarCliente(&filaClientes);
-			opcao = 0;
 		}else if(opcao == 2){
 
 		}else if(opcao == 3){
@@ -54,10 +53,10 @@ void adicionarCliente(Fila *fila){
 	char *nome;
 	puts("Qual o nome do cliente?");
 	//FIXME: Nome do cliente ñ tah salvando, print retorna null (Segmentation Fault)
-	scanf("%s", nome);
-	printf("%s",nome);
-	/*Cliente cliente;
-	cliente.nome=nome;
+	scanf("%s", &nome);
+	printf("%s\n",&nome);
+	Cliente cliente;
+	cliente.nome = nome;
 
-	enfileira(cliente, fila);*/
+	enfileira(cliente, fila);
 }
