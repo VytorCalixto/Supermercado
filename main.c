@@ -19,6 +19,7 @@ typedef struct{
 
 void adicionarCliente(Fila *fila);
 
+Lista criarListaCompras();
 
 void main(){
 	startLogger("log.txt");
@@ -39,7 +40,7 @@ void main(){
 		if(opcao == 1){
 			adicionarCliente(&filaClientes);
 		}else if(opcao == 2){
-
+			Lista lista = criarListaCompras();
 		}else if(opcao == 3){
 
 		}else if(opcao == 4){
@@ -67,4 +68,22 @@ void adicionarCliente(Fila *fila){
 	strcat(msg, &cliente.nome);
 	logMessage(msg);
 	free(msg);
+}
+
+Lista criarListaCompras(){
+	//TODO: Mensagens de log
+	Lista lista;
+	char continuar;
+	do{
+		Produto produto;
+		puts("Qual o nome do produto?");
+		scanf("%s",&produto.nome);
+		puts("Qual a quantidade do produto?");
+		scanf("%d",&produto.quantidade);
+		insereLista(&lista,&produto);
+
+		puts("Deseja inserir um novo produto?(s/n)");
+		scanf("%d",&continuar);
+	}while(continuar == 's');
+	return lista;
 }
