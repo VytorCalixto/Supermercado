@@ -73,6 +73,7 @@ void adicionarCliente(Fila *fila){
 Lista criarListaCompras(){
 	//TODO: Mensagens de log
 	Lista lista;
+	iniciaLista(&lista);
 	char continuar;
 	do{
 		Produto produto;
@@ -80,7 +81,7 @@ Lista criarListaCompras(){
 		scanf("%s",&produto.nome);
 		puts("Qual a quantidade do produto?");
 		scanf("%d",&produto.quantidade);
-		insereLista(&lista,&produto);
+		insereLista(&lista,produto);
 
 		puts("Deseja inserir um novo produto?(s/n)");
 		scanf("%d",&continuar);
