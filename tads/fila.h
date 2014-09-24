@@ -31,7 +31,7 @@ void enfileira(TIPO elemento, Fila *fila){
 TIPO desenfileira(Fila *fila){
 	ElementoFila *aux;
 	if(vaziaFila(*fila)){
-		puts("Erro: não é possível desenfileirar.\nMotivo: a fila está vazia.");
+		puts("ERRO: não é possível desenfileirar.\nMotivo: a fila está vazia.");
 		return;
 	}else{
 		aux = fila->frente;

@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "tads/lista.h"
-#include "tads/pilha.c"
 #include "logger/logger.c"
 
 typedef struct{
@@ -15,6 +14,10 @@ Logger logger; //logger precisa ser global
 #define TIPO Cliente
 #include "tads/fila.h"
 #undef TIPO
+
+#define TAM_MAX	2000
+#include "tads/pilha.h"
+#undef TAM_MAX
 
 void adicionarCliente(Fila *fila);
 
@@ -44,7 +47,7 @@ void main(){
 		}else if(opcao == 4){
 
 		}else if(opcao != 0){
-			puts("ERRO: opcao invalida.");
+			puts("AVISO: opcao invalida.");
 		}
 	}while(opcao != 0);
 	endLogger(&logger);
@@ -64,6 +67,6 @@ void adicionarCliente(Fila *fila){
 	char *msg = (char *) malloc( 1 + strlen(a) + strlen(&cliente.nome));
 	strcpy(msg, a);
 	strcat(msg, &cliente.nome);
-	logFile(&logger, msg);
+	logMessage(&logger, msg);
 	free(msg);
 }
