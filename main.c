@@ -9,8 +9,6 @@ typedef struct{
 	char *revista;
 }Cliente;
 
-Logger logger; //logger precisa ser global
-
 #define TIPO Cliente
 #include "tads/fila.h"
 #undef TIPO
@@ -23,7 +21,7 @@ void adicionarCliente(Fila *fila);
 
 
 void main(){
-	startLogger(&logger, "log.txt");
+	startLogger("log.txt");
 
 	puts("Bem vindo ao Supermercado Algoritmico!\n");
 	int opcao;
@@ -50,7 +48,7 @@ void main(){
 			puts("AVISO: opcao invalida.");
 		}
 	}while(opcao != 0);
-	endLogger(&logger);
+	endLogger();
 	return;
 }
 
@@ -67,6 +65,6 @@ void adicionarCliente(Fila *fila){
 	char *msg = (char *) malloc( 1 + strlen(a) + strlen(&cliente.nome));
 	strcpy(msg, a);
 	strcat(msg, &cliente.nome);
-	logMessage(&logger, msg);
+	logMessage(msg);
 	free(msg);
 }
