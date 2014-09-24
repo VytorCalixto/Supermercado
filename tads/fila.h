@@ -37,14 +37,14 @@ Cliente desenfileira(Fila *fila){
 	}
 }
 
-void imprimeFila(Fila *fila){
+void imprimeFila(Fila fila){
 	if(vaziaFila(fila)){
 		puts("ERRO: não é possível imprimir a fila.\nMotivo: fila vazia");
 	}else{
 		ElementoFila *aux;
 		printf("[ ");
-		for(aux = fila->frente; aux->prox !=NULL; aux = aux->prox){
-				printf("%s ", aux->elemento->nome);
+		for(aux = fila.frente; aux->prox !=NULL; aux = aux->prox){
+				printf("%s ", aux->elemento.nome);
 		}
 		printf("]");
 	}
