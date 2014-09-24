@@ -45,3 +45,16 @@ ElementoPilha pop(Pilha *pilha){
     return elemento;
   }
 }
+
+void imprimePilha(Pilha *pilha){
+  if(vaziaPilha(pilha)){
+    puts("ERRO: impossível imprimir a pilha.\n Motivo: a pilha está vazia.");
+  }else{
+    int i;
+    printf("[ ");
+    for(i = 0; i < pilha->topo; i++){
+      printf("%s ", pilha->pilha[i].nome);
+    }
+    printf("]");
+  }
+}
