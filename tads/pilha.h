@@ -2,11 +2,6 @@
 #error Você deve definir o tamanho máximo
 #endif
 
-typedef struct{
-  char *nome;
-  int edicao;
-}Revista;
-
 typedef Revista ElementoPilha;
 
 typedef struct{

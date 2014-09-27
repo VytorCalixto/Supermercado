@@ -43,9 +43,11 @@ void imprimeFila(Fila fila){
 	}else{
 		ElementoFila *aux;
 		printf("[ ");
-		for(aux = fila.frente; aux->prox !=NULL; aux = aux->prox){
-				printf("%s ", aux->elemento.nome);
+		for(aux = fila.frente->prox; aux !=NULL; aux = aux->prox){
+				printf("%s", aux->elemento.nome);
+				if(aux->prox != NULL)
+					printf(", ");
 		}
-		printf("]");
+		printf(" ]\n");
 	}
 }
