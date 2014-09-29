@@ -30,6 +30,7 @@ void adicionarItensLista(Lista *lista);
 char* lerString();
 void limparBufferEntrada();
 void empilharRevistas(Pilha *pilha);
+void entregarRevistas(Pilha *pilha, Fila *fila);
 
 void main(){
 	startLogger("log.txt");
@@ -67,7 +68,7 @@ void main(){
 			imprimeFila(filaClientes);
 		}else if(opcao == 6){
             empilharRevistas(&pilhaRevistas);
-            // entregarRevistas(&pilhaRevistas, &filaClientes);
+            entregarRevistas(&pilhaRevistas, &filaClientes);
 		}else if(opcao != 0){
 			puts("AVISO: opção inválida.");
 		}
@@ -101,7 +102,7 @@ void adicionarItensLista(Lista *lista){
 
 		puts("Deseja inserir um novo produto?(s/n)");
 		scanf(" %c",&continuar);
-        
+
         logMessage("Foi adicionado na lista de compras: ");
         logMessage(produto.nome);
         logMessage(" x ");
@@ -118,7 +119,7 @@ void empilharRevistas(Pilha *pilha){
 
     int tam = rand() % 50; //Pode ficar muito grande além disso
     int i;
-    for(i = 0; i <= tam; i++){
+    for(i = 0; i <= 2; i++){
         Revista revista;
         revista.nome = revistas[rand() % 8];
         revista.edicao = rand() % 36;
@@ -129,6 +130,18 @@ void empilharRevistas(Pilha *pilha){
         logMessage("\n");
     }
     logPilha(pilha);
+}
+
+//TODO: logs
+void entregarRevistas(Pilha *pilha, Fila *fila){
+    while(!vaziaPilha(pilha) && !vaziaFila(*fila)){
+        Cliente cliente = desenfileira(fila);
+        cliente.revista = pop(pilha);
+        printf("Cliente %s recebeu a revista %s, %dª edição.\n", cliente.nome, cliente.revista.nome, cliente.revista.edicao);
+    }
+    while(!vaziaFila(*fila)){
+        printf("Cliente %s não recebeu revista.\n", desenfileira(fila).nome);
+    }
 }
 
 /*Tive que criar essa função pq scanf não lê espaço,
