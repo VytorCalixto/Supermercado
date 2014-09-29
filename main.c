@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "logger/logger.c"
 
 typedef struct{
@@ -28,7 +29,7 @@ void adicionarCliente(Fila *fila);
 void adicionarItensLista(Lista *lista);
 char* lerString();
 void limparBufferEntrada();
-
+void empilharRevistas(Pilha *pilha);
 
 void main(){
 	startLogger("log.txt");
@@ -41,7 +42,7 @@ void main(){
 	Pilha pilhaRevistas;
 	Lista listaCompras;
 	iniciaLista(&listaCompras);
-	//iniciarPilha(&pilhaRevistas);
+	iniciaPilha(&pilhaRevistas);
 
 	do{
 		puts("O que você gostaria de fazer:");
@@ -55,17 +56,23 @@ void main(){
 		}else if(opcao == 2){
 			imprimeLista(&listaCompras);
 		}else if(opcao == 3){
-			
+            imprimeLista(&listaCompras);
+            puts("Qual item você quer editar?");
+            int index;
+            scanf("%d", &index);
+            //editarProdutoLista(&listaCompras, index);
 		}else if(opcao == 4){
 			adicionarCliente(&filaClientes);
 		}else if(opcao == 5){
 			imprimeFila(filaClientes);
 		}else if(opcao == 6){
-			
+            empilharRevistas(&pilhaRevistas);
+            // entregarRevistas(&pilhaRevistas, &filaClientes);
 		}else if(opcao != 0){
 			puts("AVISO: opção inválida.");
 		}
 	}while(opcao != 0);
+
 	endLogger();
 	return;
 }
@@ -77,32 +84,55 @@ void adicionarCliente(Fila *fila){
 
 	enfileira(cliente, fila);
 
-	char *a = "Foi adicionado na fila o cliente: ";
-	char *msg = (char *) malloc( 1 + strlen(a) + strlen(&cliente.nome));
-	strcpy(msg, a);
-	strcat(msg, &cliente.nome);
-	logMessage(msg);
-	free(msg);
+    logMessage("Foi adicionado na fila o cliente: ");
+    logMessage(cliente.nome);
+    logFila(*fila);
 }
 
 void adicionarItensLista(Lista *lista){
-	//TODO: Mensagens de log
 	char continuar;
 	do{
 		Produto produto;
 		puts("Qual o nome do produto?");
-		produto.nome = lerString(); 
+		produto.nome = lerString();
 		puts("Qual a quantidade do produto?");
 		scanf("%d",&produto.quantidade);
 		insereLista(lista,produto);
 
 		puts("Deseja inserir um novo produto?(s/n)");
 		scanf(" %c",&continuar);
+        
+        logMessage("Foi adicionado na lista de compras: ");
+        logMessage(produto.nome);
+        logMessage(" x ");
+        char qtd[1000];
+        snprintf(qtd, sizeof(qtd), "%d", produto.quantidade);
+        logMessage(qtd);
+        logMessage("\n");
 	}while(continuar == 's');
 }
 
-/*Tive que criar essa função pq scanf não lê espaço, 
-  então fiquei puto pq ia ter q fazer uma função só p/ poder ler espaço 
+void empilharRevistas(Pilha *pilha){
+    srand(time(NULL));
+    char *revistas[8] = {"Mundo Estranho", "info", "Super Interessante", "Caras", "Tititi", "Isto É", "Carta Capital", "Veja"};
+
+    int tam = rand() % 50; //Pode ficar muito grande além disso
+    int i;
+    for(i = 0; i <= tam; i++){
+        Revista revista;
+        revista.nome = revistas[rand() % 8];
+        revista.edicao = rand() % 36;
+        push(pilha, revista);
+
+        logMessage("Empilhada a revista: ");
+        logMessage(revista.nome);
+        logMessage("\n");
+    }
+    logPilha(pilha);
+}
+
+/*Tive que criar essa função pq scanf não lê espaço,
+  então fiquei puto pq ia ter q fazer uma função só p/ poder ler espaço
   e resolvi alocar a string dinamicamente tbm.
   (btw, todo mundo parece odiar o scanf e recomendam não usá-lo, entrei p/ essa lista de pessoas tbm -.-
    http://c-faq.com/stdio/scanfprobs.html)

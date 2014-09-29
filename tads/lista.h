@@ -6,6 +6,7 @@ typedef struct{
 void iniciaLista(Lista *lista){
 	lista->vetor = (Produto *) malloc(sizeof(Produto));
 	lista->final = 0;
+	logMessage("A lista foi iniciada.\nA lista está vazia.\n");
 }
 
 int vaziaLista(Lista *lista){
@@ -20,15 +21,18 @@ void insereLista(Lista *lista, Produto elemento){
 		lista->final++;
 	}else{
 		puts("ERRO: não é possível inserir.\nMotivo: erro na alocação do vetor.");
+		logMessage("ERRO: não é possível inserir.\nMotivo: erro na alocação do vetor.\n");
 	}
 }
 
 Produto removeLista(Lista *lista, int posicao){
 	if(vaziaLista(lista)){
 		puts("ERRO: não é possível remover.\nMotivo: a lista está vazia.");
+		logMessage("ERRO: não é possível remover.\nMotivo: a lista está vazia.\n");
 		return;
 	}else if(posicao >= lista->final){
 		puts("ERRO: não é possível remover.\nMotivo: posição maior do que o tamanho da lista.");
+		logMessage("ERRO: não é possível remover.\nMotivo: posição maior do que o tamanho da lista.\n");
 		return;
 	}else{
 		int i;
@@ -47,10 +51,30 @@ Produto removeLista(Lista *lista, int posicao){
 void imprimeLista(Lista *lista){
 	if(vaziaLista(lista)){
 		puts("ERRO: impossível imprimir lista.\nMotivo: a lista está vazia.");
+		logMessage("ERRO: impossível imprimir lista.\nMotivo: a lista está vazia.\n");
 	}else{
 		int i;
 		for(i=0;i<lista->final;i++){
 			printf("%s x%d\n", lista->vetor[i].nome, lista->vetor[i].quantidade);
+		}
+	}
+}
+
+void logLista(Lista *lista){
+	if(vaziaLista(lista)){
+		logMessage("A lista está vazia.\n");
+	}else{
+		int i;
+		logMessage("Veja a lista:\n");
+		for(i=0; i<lista->final; i++){
+			char *indice;
+			snprintf(indice, sizeof(indice), "%d", i);
+			logMessage(indice);
+			logMessage(" - ");
+			logMessage(lista->vetor[i].nome);
+			logMessage(" x ");
+			logMessage(lista->vetor[i].quantidade);
+			logMessage("\n");
 		}
 	}
 }

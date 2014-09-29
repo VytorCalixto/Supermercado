@@ -11,6 +11,7 @@ void iniciaFila(Fila *fila){
 	fila->frente = (ElementoFila*)malloc(sizeof(ElementoFila));
 	fila->final = fila->frente;
 	fila->final->prox = NULL;
+	logMessage("A fila foi iniciada.\nA fila está vazia.\n");
 }
 
 int vaziaFila(Fila fila){
@@ -28,6 +29,7 @@ Cliente desenfileira(Fila *fila){
 	ElementoFila *aux;
 	if(vaziaFila(*fila)){
 		puts("ERRO: não é possível desenfileirar.\nMotivo: a fila está vazia.");
+		logMessage("ERRO: não é possível desenfileirar.\nMotivo: a fila está vazia.\n");
 		return;
 	}else{
 		aux = fila->frente;
@@ -39,7 +41,8 @@ Cliente desenfileira(Fila *fila){
 
 void imprimeFila(Fila fila){
 	if(vaziaFila(fila)){
-		puts("ERRO: não é possível imprimir a fila.\nMotivo: fila vazia");
+		puts("ERRO: não é possível imprimir a fila.\nMotivo: fila vazia.");
+		logMessage("ERRO: não é possível imprimir a fila.\nMotivo: fila vazia.\n");
 	}else{
 		ElementoFila *aux;
 		printf("[ ");
@@ -49,5 +52,21 @@ void imprimeFila(Fila fila){
 					printf(", ");
 		}
 		printf(" ]\n");
+	}
+}
+
+void logFila(Fila fila){
+	if(vaziaFila(fila)){
+		logMessage("A fila está vazia.\n");
+	}else{
+		logMessage("Veja a fila:\n");
+		ElementoFila *aux;
+		logMessage("[ ");
+		for(aux = fila.frente->prox; aux !=NULL; aux = aux->prox){
+				logMessage(aux->elemento.nome);
+				if(aux->prox != NULL)
+					logMessage(", ");
+		}
+		logMessage(" ]\n");
 	}
 }
