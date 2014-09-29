@@ -25,17 +25,18 @@ typedef struct{
 #include "tads/pilha.h"
 #undef TAM_MAX
 
-void adicionarCliente(Fila *fila);
 void adicionarItensLista(Lista *lista);
-char* lerString();
-void limparBufferEntrada();
+void removerProdutoLista(Lista *listaCompras);
+void adicionarCliente(Fila *fila);
 void empilharRevistas(Pilha *pilha);
 void entregarRevistas(Pilha *pilha, Fila *fila);
+char* lerString();
+void limparBufferEntrada();
 
 void main(){
 	startLogger("log.txt");
 
-	puts("Bem vindo ao Supermercado Algorítmico!\n");
+	puts("Bem vindo ao Supermercado Algorítmico!");
 	int opcao;
 
 	Fila filaClientes;
@@ -46,22 +47,20 @@ void main(){
 	iniciaPilha(&pilhaRevistas);
 
 	do{
-		puts("O que você gostaria de fazer:");
-		puts("1. Adicionar itens à Lista de Compras\n2. Visualizar a Lista de Compras\n3. Editar a Lista de Compras");
+        //limparBufferEntrada();
+		puts("\nO que você gostaria de fazer:");
+		puts("1. Adicionar item à Lista de Compras\n2. Visualizar a Lista de Compras\n3. Remover item da Lista de Compras");
 		puts("4. Adicionar Cliente à Fila\n5. Visualizar a Fila de Clientes\n6. Entregar as Revistas aos Clientes");
 		puts("0. Sair");
 		scanf("%d",&opcao);
+        printf("\n");
 
 		if(opcao == 1){
 			adicionarItensLista(&listaCompras);
 		}else if(opcao == 2){
 			imprimeLista(&listaCompras);
 		}else if(opcao == 3){
-            imprimeLista(&listaCompras);
-            puts("Qual item você quer editar?");
-            int index;
-            scanf("%d", &index);
-            //editarProdutoLista(&listaCompras, index);
+           removerProdutoLista(&listaCompras);
 		}else if(opcao == 4){
 			adicionarCliente(&filaClientes);
 		}else if(opcao == 5){
@@ -91,26 +90,28 @@ void adicionarCliente(Fila *fila){
 }
 
 void adicionarItensLista(Lista *lista){
-	char continuar;
-	do{
-		Produto produto;
-		puts("Qual o nome do produto?");
-		produto.nome = lerString();
-		puts("Qual a quantidade do produto?");
-		scanf("%d",&produto.quantidade);
-		insereLista(lista,produto);
+	Produto produto;
+	puts("Qual o nome do produto?");
+	produto.nome = lerString();
+	puts("Qual a quantidade do produto?");
+	scanf("%d",&produto.quantidade);
+	insereLista(lista,produto);
 
-		puts("Deseja inserir um novo produto?(s/n)");
-		scanf(" %c",&continuar);
+    logMessage("Foi adicionado na lista de compras: ");
+    logMessage(produto.nome);
+    logMessage(" x ");
+    char qtd[1000];
+    snprintf(qtd, sizeof(qtd), "%d", produto.quantidade);
+    logMessage(qtd);
+    logMessage("\n");
+}
 
-        logMessage("Foi adicionado na lista de compras: ");
-        logMessage(produto.nome);
-        logMessage(" x ");
-        char qtd[1000];
-        snprintf(qtd, sizeof(qtd), "%d", produto.quantidade);
-        logMessage(qtd);
-        logMessage("\n");
-	}while(continuar == 's');
+void removerProdutoLista(Lista *listaCompras){
+    int index;
+    imprimeLista(listaCompras);
+    puts("Entre com o índice referente ao item que você quer remover:");
+    scanf("%d", &index);
+    removeLista(listaCompras,index-1);
 }
 
 void empilharRevistas(Pilha *pilha){
@@ -144,12 +145,6 @@ void entregarRevistas(Pilha *pilha, Fila *fila){
     }
 }
 
-/*Tive que criar essa função pq scanf não lê espaço,
-  então fiquei puto pq ia ter q fazer uma função só p/ poder ler espaço
-  e resolvi alocar a string dinamicamente tbm.
-  (btw, todo mundo parece odiar o scanf e recomendam não usá-lo, entrei p/ essa lista de pessoas tbm -.-
-   http://c-faq.com/stdio/scanfprobs.html)
-*/
 char* lerString(){
 	limparBufferEntrada();
 

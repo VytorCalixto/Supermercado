@@ -55,7 +55,7 @@ void imprimeLista(Lista *lista){
 	}else{
 		int i;
 		for(i=0;i<lista->final;i++){
-			printf("%s x%d\n", lista->vetor[i].nome, lista->vetor[i].quantidade);
+			printf("%d. %s x%d\n", i+1, lista->vetor[i].nome, lista->vetor[i].quantidade);
 		}
 	}
 }
