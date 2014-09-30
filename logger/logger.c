@@ -25,12 +25,12 @@ void startLogger(char *path){
   logger.file = fopen(path, "w");
   logMessage("=================================================\n");
   logMessage("Inicio da execucao: Supermercado Algoritmico\n");
-  logMessage("Israel Barreto Sant'Anna, Vytor dos Santos Bezerra Calixto.\n");
-  logMessage("=================================================\n");
+  logMessage("Israel Barreto Sant'Anna, Vytor dos Santos Bezerra Calixto\n");
+  logMessage("=================================================\n\n");
 }
 
 void endLogger(){
-  logMessage("=================================================\n");
-  logMessage("Fim da execucao\n");
+  logMessage("\n=================================================\n");
+  logMessage("Fim da execução\n");
   fclose(logger.file);
 }

@@ -48,6 +48,7 @@ void main(){
 
 	do{
         //limparBufferEntrada();
+        // printf("\e[1;1H\e[2J"); //Limpa a tela
 		puts("\nO que você gostaria de fazer:");
 		puts("1. Adicionar item à Lista de Compras\n2. Visualizar a Lista de Compras\n3. Remover item da Lista de Compras");
 		puts("4. Adicionar Cliente à Fila\n5. Visualizar a Fila de Clientes\n6. Entregar as Revistas aos Clientes");
@@ -69,7 +70,7 @@ void main(){
             empilharRevistas(&pilhaRevistas);
             entregarRevistas(&pilhaRevistas, &filaClientes);
 		}else if(opcao != 0){
-			puts("AVISO: opção inválida.");
+			puts("\e[33mAVISO: opção inválida.\e[0m");
 		}
 	}while(opcao != 0);
 
@@ -77,18 +78,15 @@ void main(){
 	return;
 }
 
+//Adiciona um cliente a fila.
 void adicionarCliente(Fila *fila){
 	Cliente cliente;
 	puts("Qual o nome do cliente?");
 	cliente.nome = lerString();
-
 	enfileira(cliente, fila);
-
-    logMessage("Foi adicionado na fila o cliente: ");
-    logMessage(cliente.nome);
-    logFila(*fila);
 }
 
+//Adiciona um item a lista de compras
 void adicionarItensLista(Lista *lista){
 	Produto produto;
 	puts("Qual o nome do produto?");
@@ -96,52 +94,57 @@ void adicionarItensLista(Lista *lista){
 	puts("Qual a quantidade do produto?");
 	scanf("%d",&produto.quantidade);
 	insereLista(lista,produto);
-
-    logMessage("Foi adicionado na lista de compras: ");
-    logMessage(produto.nome);
-    logMessage(" x ");
-    char qtd[1000];
-    snprintf(qtd, sizeof(qtd), "%d", produto.quantidade);
-    logMessage(qtd);
-    logMessage("\n");
 }
 
+//Remove um item da lista de compras
 void removerProdutoLista(Lista *listaCompras){
-    int index;
-    imprimeLista(listaCompras);
-    puts("Entre com o índice referente ao item que você quer remover:");
-    scanf("%d", &index);
-    removeLista(listaCompras,index-1);
+    if(!vaziaLista(listaCompras)){
+        int index;
+        imprimeLista(listaCompras);
+        puts("Entre com o índice referente ao item que você quer remover:");
+        scanf("%d", &index);
+        removeLista(listaCompras,index-1);
+    }else{
+        puts("A lista está vazia. Não há nada a ser removido.");
+    }
 }
 
+//Empilha as revistas que serão entregues.
 void empilharRevistas(Pilha *pilha){
     srand(time(NULL));
     char *revistas[8] = {"Mundo Estranho", "info", "Super Interessante", "Caras", "Tititi", "Isto É", "Carta Capital", "Veja"};
 
-    int tam = rand() % 50; //Pode ficar muito grande além disso
+    int tam = rand() % 25; //Pode ficar muito grande além disso
     int i;
-    for(i = 0; i <= 2; i++){
+    for(i = 0; i <= tam; i++){
         Revista revista;
         revista.nome = revistas[rand() % 8];
         revista.edicao = rand() % 36;
         push(pilha, revista);
-
-        logMessage("Empilhada a revista: ");
-        logMessage(revista.nome);
-        logMessage("\n");
     }
-    logPilha(pilha);
 }
 
-//TODO: logs
+//Entrega as revistas para os clientes
 void entregarRevistas(Pilha *pilha, Fila *fila){
-    while(!vaziaPilha(pilha) && !vaziaFila(*fila)){
+    if(vaziaFila(fila)){
+        puts("Não há clientes na fila \e[35m:(\e[0m\nPor que você não adiciona alguns?");
+    }
+    while(!vaziaPilha(pilha) && !vaziaFila(fila)){
         Cliente cliente = desenfileira(fila);
         cliente.revista = pop(pilha);
         printf("Cliente %s recebeu a revista %s, %dª edição.\n", cliente.nome, cliente.revista.nome, cliente.revista.edicao);
+        logMessage("Cliente ");
+        logMessage(cliente.nome);
+        logMessage(" recebeu a revista ");
+        logMessage(cliente.revista.nome);
+        logMessage("\n");
     }
-    while(!vaziaFila(*fila)){
-        printf("Cliente %s não recebeu revista.\n", desenfileira(fila).nome);
+    while(!vaziaFila(fila)){
+        Cliente cliente = desenfileira(fila);
+        printf("Cliente %s não recebeu revista.\n", cliente.nome);
+        logMessage("Cliente ");
+        logMessage(cliente.nome);
+        logMessage(" não recebeu revista.\n");
     }
 }
 
