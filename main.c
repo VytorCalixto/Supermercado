@@ -148,6 +148,7 @@ void entregarRevistas(Pilha *pilha, Fila *fila){
     }
 }
 
+//Função para ler string, dinamicamente, com espaços
 char* lerString(){
 	limparBufferEntrada();
 

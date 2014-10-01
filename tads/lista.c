@@ -51,6 +51,7 @@ Produto removeLista(Lista *lista, int posicao){
 			lista->vetor[i] = lista->vetor[i+1];
 		}
 		lista->final--;
+		//Realoca para uma variável auxiliar. Caso ocorra um erro, o lista->vetor não será perdido.
 		Produto *auxAlloc = (Produto *) realloc(lista->vetor, sizeof(Produto)*(lista->final)+1);
 		if(auxAlloc){
 			lista->vetor = auxAlloc;
