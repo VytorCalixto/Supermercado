@@ -21,7 +21,7 @@ typedef struct{
 #include "tads/fila.c"
 #include "tads/lista.c"
 
-#define TAM_MAX	2000
+#define TAM_MAX	25
 #include "tads/pilha.c"
 #undef TAM_MAX
 
