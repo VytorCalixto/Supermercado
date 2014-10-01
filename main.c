@@ -174,6 +174,7 @@ char* lerString(){
     return str;
 }
 
+//Scanf deixa "sujeira" no buffer. É preciso "limpar".
 void limparBufferEntrada(){
 	int c = getchar();
 	while (c != EOF && c != '\n')
