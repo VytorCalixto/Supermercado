@@ -18,11 +18,11 @@ typedef struct{
 	int quantidade;
 }Produto;
 
-#include "tads/fila.h"
-#include "tads/lista.h"
+#include "tads/fila.c"
+#include "tads/lista.c"
 
 #define TAM_MAX	2000
-#include "tads/pilha.h"
+#include "tads/pilha.c"
 #undef TAM_MAX
 
 void adicionarItensLista(Lista *lista);
